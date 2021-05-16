@@ -1,3 +1,4 @@
+import React from 'react';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchAllPosts } from '../../fetch/fetch';
 import actions from './actions';
@@ -12,7 +13,7 @@ export const fetchPosts = () => async dispatch => {
   }
 };
 
-// export const fetchPosts = createAsyncThunk('books/fetchBooks', async (_, { rejectWithValue }) => {
+// export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, { rejectWithValue }) => {
 //   try {
 //     const books = await bookShelfAPI.fetchBooks();
 //     return books;

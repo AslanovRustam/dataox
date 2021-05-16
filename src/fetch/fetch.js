@@ -5,6 +5,55 @@ const fetchAllPosts = () => {
     return response.json();
   });
 };
+
+const fetchCommentsToPosts = id => {
+  return fetch(`${BASE_URL}/posts/${id}/comments`).then(response => {
+    return response.json();
+  });
+};
+
+const fetchPostsById = id => {
+  return fetch(`${BASE_URL}/posts/${id}`).then(response => {
+    return response.json();
+  });
+};
+
+const addPost = post => {
+  return fetch(`${BASE_URL}/posts`, {
+    method: 'POST',
+    body: JSON.stringify(post),
+    // body: JSON.stringify({
+    //   title: 'foo',
+    //   body: 'bar',
+    //   userId: 1,
+    // }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  }).then(response => {
+    return response.json();
+  });
+};
+
+const updPost = (update, id) => {
+  return fetch(`${BASE_URL}/posts/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(update),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  }).then(response => {
+    return response.json();
+  });
+};
+
+const deletePost = id => {
+  return fetch(`${BASE_URL}/posts/${id}`, {
+    method: 'DELETE',
+  }).then(response => {
+    return response.json();
+  });
+};
 // async function fetchAllPosts() {
 //   const response = await fetch(`${BASE_URL}/posts`);
 //   const posts = await response.json();
@@ -17,4 +66,4 @@ const fetchAllPosts = () => {
 //   });
 // };
 
-export { fetchAllPosts };
+export { fetchAllPosts, fetchPostsById, addPost, updPost, deletePost, fetchCommentsToPosts };
