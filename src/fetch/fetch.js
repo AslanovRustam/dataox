@@ -47,7 +47,7 @@ const updPost = (update, id) => {
   });
 };
 
-const deletePost = id => {
+const fetchdeletePost = id => {
   return fetch(`${BASE_URL}/posts/${id}`, {
     method: 'DELETE',
   }).then(response => {
@@ -66,4 +66,4 @@ const deletePost = id => {
 //   });
 // };
 
-export { fetchAllPosts, fetchPostsById, addPost, updPost, deletePost, fetchCommentsToPosts };
+export { fetchAllPosts, fetchPostsById, addPost, updPost, fetchdeletePost, fetchCommentsToPosts };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchAllPosts } from '../../fetch/fetch';
+// import { createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchAllPosts, fetchdeletePost } from '../../fetch/fetch';
 import actions from './actions';
 
 export const fetchPosts = () => async dispatch => {
@@ -10,6 +10,16 @@ export const fetchPosts = () => async dispatch => {
     dispatch(actions.fetchPostSuccess(posts));
   } catch (error) {
     dispatch(actions.fetchPostError(error));
+  }
+};
+
+export const deletePosts = id => async dispatch => {
+  dispatch(actions.deletePostsRequest());
+  try {
+    const posts = await fetchdeletePost(id);
+    dispatch(actions.deletePostsSuccess(posts));
+  } catch (error) {
+    dispatch(actions.deletePostsError(error));
   }
 };
 

@@ -1,0 +1,12 @@
+.addButton {
+  color: white;
+  margin-left: 10px;
+  padding: 2px;
+  background-color: rgb(20, 92, 42);
+}
+.formtStyle {
+  padding: 16px;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
