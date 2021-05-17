@@ -1,6 +1,6 @@
 import React from 'react';
 // import { createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchAllPosts, fetchdeletePost } from '../../fetch/fetch';
+import { fetchAllPosts, fetchdeletePost, addPost, updPost } from '../../fetch/fetch';
 import actions from './actions';
 
 export const fetchPosts = () => async dispatch => {
@@ -13,13 +13,33 @@ export const fetchPosts = () => async dispatch => {
   }
 };
 
-export const deletePosts = id => async dispatch => {
-  dispatch(actions.deletePostsRequest());
+export const deletePost = id => async dispatch => {
+  dispatch(actions.deletePostRequest());
   try {
-    const posts = await fetchdeletePost(id);
-    dispatch(actions.deletePostsSuccess(posts));
+    await fetchdeletePost(id);
+    dispatch(actions.deletePostSuccess(id));
   } catch (error) {
-    dispatch(actions.deletePostsError(error));
+    dispatch(actions.deletePostError(error));
+  }
+};
+
+export const createPost = post => async dispatch => {
+  dispatch(actions.addPostRequest());
+  try {
+    const newPost = await addPost(post);
+    dispatch(actions.addPostSuccess(newPost));
+  } catch (error) {
+    dispatch(actions.addPostError(error));
+  }
+};
+
+export const editPost = (post, id) => async dispatch => {
+  dispatch(actions.updPostRequest());
+  try {
+    const newPost = await updPost(post, id);
+    dispatch(actions.updPostSuccess(newPost));
+  } catch (error) {
+    dispatch(actions.updPostError(error));
   }
 };
 

@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import s from './addPost.module.css';
+import * as operations from '../redux/operations';
+import { useDispatch } from 'react-redux';
 
 export default function AddPost() {
   const [titleInput, setTitleInput] = useState('');
   const [bodyInput, setBodyInput] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleChangeTitle = e => {
     setTitleInput(e.currentTarget.value);
@@ -14,7 +18,7 @@ export default function AddPost() {
 
   const handleSubmit = e => {
     e.preventDefault();
-
+    dispatch(operations.createPost({ title: titleInput, body: bodyInput, userId: 1 }));
     setTitleInput('');
     setBodyInput('');
   };

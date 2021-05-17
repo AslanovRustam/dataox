@@ -4,12 +4,20 @@ import { createReducer } from '@reduxjs/toolkit';
 import actions from './actions';
 
 const postReducer = createReducer([], {
-  [actions.fetchPostSuccess]: (_, action) => action.payload,
+  [actions.fetchPostSuccess]: (_, action) => {
+    return action.payload;
+  },
+  [actions.addPostSuccess]: (state, action) => {
+    return [action.payload, ...state];
+  },
+  [actions.deletePostSuccess]: (state, action) => {
+    return state.filter(post => post.id !== action.payload);
+  },
 });
 
-const error = createReducer(null, {
-  [actions.fetchPostError]: (_, action) => action.payload,
-});
+// const error = createReducer(null, {
+//   [actions.fetchPostError]: (_, action) => action.payload,
+// });
 
 // const filterReducer = createReducer('', {
 //   [actions.filterItem]: (_state, action) => {

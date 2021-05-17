@@ -24,12 +24,19 @@ export default function PostList() {
   // console.log(updparsedPostsFromLocalStorage);
 
   function deletePost(id) {
-    updParsedPosts = updParsedPosts.filter(post => post.id !== id);
-    console.log(updParsedPosts);
-    localStorage.setItem('updParsedPosts', JSON.stringify(updParsedPosts));
-    // console.log(updparsedPostsFromLocalStorage);
-    return updParsedPosts;
+    dispatch(operations.deletePost(id));
   }
+
+  function editPost(post, id) {
+    dispatch(operations.editPost(post, id));
+  }
+  // function deletePost(id) {
+  //   updParsedPosts = updParsedPosts.filter(post => post.id !== id);
+  //   console.log(updParsedPosts);
+  //   localStorage.setItem('updParsedPosts', JSON.stringify(updParsedPosts));
+  //   // console.log(updparsedPostsFromLocalStorage);
+  //   return updParsedPosts;
+  // }
   // console.log(updParsedPosts);
   // function deletePost(id) {
   //   const dispatch = useDispatch();
@@ -49,7 +56,12 @@ export default function PostList() {
               <button className={s.postButton} onClick={() => deletePost(post.id)}>
                 Delete
               </button>
-              <button className={s.postButton}>Update</button>
+              <button
+                className={s.postButton}
+                onClick={() => editPost({ tittle: post.title, body: post.body }, post.id)}
+              >
+                Update
+              </button>
             </li>
           ))}
         </ul>
