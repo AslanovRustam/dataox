@@ -7,6 +7,12 @@ const postReducer = createReducer([], {
   [actions.fetchPostSuccess]: (_, action) => {
     return action.payload;
   },
+});
+
+const filterReducer = createReducer([], {
+  [actions.fetchPostSuccess]: (_, action) => {
+    return action.payload;
+  },
   [actions.addPostSuccess]: (state, action) => {
     return [action.payload, ...state];
   },
@@ -14,32 +20,22 @@ const postReducer = createReducer([], {
     return state.filter(post => post.id !== action.payload);
   },
   [actions.updPostSuccess]: (state, action) => {
+    return state.map(post => {
+      if (action.payload.id === post.id) {
+        return { ...action.payload };
+      }
+      return post;
+    });
+  },
+  [actions.comentToPostSuccess]: (state, action) => {
     console.log(action.payload);
-    // return state.push(action.payload);
+    return action.payload;
   },
   [actions.filterSuccess]: (state, action) => {
-    console.log(action.payload);
-    // return state.push(action.payload);
+    console.log('action.payload', action.payload);
+    return action.payload;
   },
 });
-
-// const error = createReducer(null, {
-//   [actions.fetchPostError]: (_, action) => action.payload,
-// });
-
-// const filterReducer = createReducer('', {
-//   [actions.filterItem]: (_state, action) => {
-//     return action.payload;
-//   },
-// });
-const filterReducer = (state = '', { type, payload }) => {
-  switch (type) {
-    case 'filter':
-      return payload;
-    default:
-      return state;
-  }
-};
 
 const rootReducer = combineReducers({
   posts: postReducer,
@@ -51,9 +47,3 @@ const store = configureStore({
 });
 
 export default store;
-
-// import { createStore } from 'redux';
-// const reducer = (state = {}, action) => state;
-// const postReducer = (state = [], action) => {
-//   return state;
-// };

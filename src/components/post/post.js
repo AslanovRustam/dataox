@@ -3,7 +3,7 @@ import s from './postList.module.css';
 // import { useState } from 'react';
 // import Modal from '../modal/modal';
 
-export default function Post({ title, body }) {
+export default function Post({ title, body, email, name }) {
   // const [showModal, setShowmodal] = useState(false);
 
   // const toggleModal = () => setShowmodal(!showModal);
@@ -11,8 +11,11 @@ export default function Post({ title, body }) {
     <>
       <div className={s.postCard}>
         <h2>{title}</h2>
+        {name && <h3>{name}</h3>}
+        {email && <h4>{email}</h4>}
         <p>{body}</p>
       </div>
+
       {/* {showModal && <Modal onClose={toggleModal} src={largeImageUrl} alt={alt} />} */}
     </>
   );

@@ -6,10 +6,10 @@ import s from './modal.module.css';
 
 const modalRoot = document.querySelector('#modal-root');
 
-export default function Modal({ onClose }) {
-  const [titleInput, setTitleInput] = useState('');
-  const [bodyInput, setBodyInput] = useState('');
-
+export default function Modal({ onClose, post }) {
+  const [title, setTitleInput] = useState(post.title);
+  const [body, setBodyInput] = useState(post.body);
+  // console.log(post);
   // const posts = useSelector(state => state.posts);
 
   const dispatch = useDispatch();
@@ -35,14 +35,15 @@ export default function Modal({ onClose }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setTitleInput('');
-    setBodyInput('');
+    console.log();
+    // setTitleInput('');
+    // setBodyInput('');
   };
 
   const editPost = e => {
     // dispatch(operations.createPost({ title: titleInput, body: bodyInput, userId: 1 }));
-    console.log(e);
-    dispatch(operations.editPost({ titleInput, bodyInput }));
+    // console.log(id);
+    dispatch(operations.editPost({ title, body }, post.id));
     onClose();
   };
 
@@ -51,20 +52,12 @@ export default function Modal({ onClose }) {
       <form className={s.formtStyle} onSubmit={handleSubmit}>
         <label className={s.labelModalStyle}>
           Title
-          <input
-            className={s.inputModalStyle}
-            value={titleInput}
-            onChange={handleChangeTitle}
-          ></input>
+          <input className={s.inputModalStyle} value={title} onChange={handleChangeTitle}></input>
         </label>
 
         <label className={s.labelModalStyle}>
           Body
-          <input
-            className={s.inputModalStyle}
-            value={bodyInput}
-            onChange={handleChangeBody}
-          ></input>
+          <input className={s.inputModalStyle} value={body} onChange={handleChangeBody}></input>
         </label>
         <button type="submit" className={s.addButton} onClick={() => editPost()}>
           Update

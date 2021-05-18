@@ -18,7 +18,7 @@ export default function AddPost() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(operations.createPost({ title: titleInput, body: bodyInput, userId: 1 }));
+    dispatch(operations.createPost({ userId: 1, title: titleInput, body: bodyInput }));
     setTitleInput('');
     setBodyInput('');
   };

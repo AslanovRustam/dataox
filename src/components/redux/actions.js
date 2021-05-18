@@ -20,6 +20,10 @@ const filterRequest = createAction('filterRequest');
 const filterSuccess = createAction('filterSuccess');
 const filterError = createAction('filterError');
 
+const comentToPostRequest = createAction('fcomentToPostRequest');
+const comentToPostSuccess = createAction('comentToPostSuccess');
+const comentToPostError = createAction('comentToPostError');
+
 // const filterItem = createAction('filter');
 
 export default {
@@ -39,4 +43,7 @@ export default {
   updPostRequest,
   updPostSuccess,
   updPostError,
+  comentToPostRequest,
+  comentToPostSuccess,
+  comentToPostError,
 };

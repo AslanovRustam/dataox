@@ -4,11 +4,12 @@ import * as operations from '../redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import Post from './post';
 import Modal from '../modal/modal';
+import Pagination from '../pagination/pagination';
 import s from './postList.module.css';
 
 export default function PostList() {
   const posts = useSelector(state => state.posts);
-
+  const filteredPosts = useSelector(state => state.filteredPosts);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(operations.fetchPosts());
@@ -25,54 +26,47 @@ export default function PostList() {
   // console.log(updparsedPostsFromLocalStorage);
 
   function deletePost(id) {
+    console.log('id', id);
     dispatch(operations.deletePost(id));
   }
+  // const postsForList = filteredPosts.length > 0 ? filteredPosts : updParsedPosts;
 
-  function editPost(post, id) {
-    dispatch(operations.editPost(post, id));
-  }
-  // function deletePost(id) {
-  //   updParsedPosts = updParsedPosts.filter(post => post.id !== id);
-  //   console.log(updParsedPosts);
-  //   localStorage.setItem('updParsedPosts', JSON.stringify(updParsedPosts));
-  //   // console.log(updparsedPostsFromLocalStorage);
-  //   return updParsedPosts;
-  // }
-  // console.log(updParsedPosts);
-  // function deletePost(id) {
-  //   const dispatch = useDispatch();
-  //   useEffect(() => {
-  //     dispatch(operations.deletePosts(id));
-  //   }, [dispatch]);
-  //   return console.log(id);
-  // }
   const [showModal, setShowmodal] = useState(false);
+  const [currentPost, setCurrentPost] = useState('');
 
-  const toggleModal = () => setShowmodal(!showModal);
+  const toggleModal = post => {
+    setShowmodal(!showModal);
+    setCurrentPost(post);
+  };
+
+  function getComentsToPost(id) {
+    dispatch(operations.postWithComents(id));
+  }
   return (
     <>
-      <div>
-        {updParsedPosts.length > 0 && (
-          <ul>
-            {updParsedPosts.map(post => (
-              <li className={s.elementPostCard} key={post.id} onClick={e => console.log(post.id)}>
-                <Post title={post.title} body={post.body} />
-                <button className={s.postButton} onClick={() => deletePost(post.id)}>
-                  Delete
-                </button>
-                <button
-                  className={s.postButton}
-                  // onClick={() => editPost({ tittle: post.title, body: post.body }, post.id)}
-                  onClick={toggleModal}
-                >
-                  Update
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      {showModal && <Modal onClose={toggleModal} />}
+      {/* <div>
+        <ul>
+          {filteredPosts.map(post => (
+            <li className={s.elementPostCard} key={post.id}>
+              <div onClick={() => getComentsToPost(post.id)}>
+                <Post title={post.title} body={post.body} email={post.email} name={post.name} />
+              </div>
+              <button className={s.postButton} onClick={() => deletePost(post.id)}>
+                Delete
+              </button>
+              <button
+                className={s.postButton}
+                // onClick={() => editPost({ tittle: post.title, body: post.body }, post.id)}
+                onClick={e => toggleModal(post)}
+              >
+                Update
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div> */}
+      <Pagination />
+      {showModal && <Modal onClose={toggleModal} post={currentPost} />}
     </>
   );
 }
@@ -96,4 +90,24 @@ export default function PostList() {
 //       </ul>
 //     </div>
 //   );
+// }
+
+////////////////////////
+// function editPost(post, id) {
+//   dispatch(operations.editPost(post, id));
+// }
+// function deletePost(id) {
+//   updParsedPosts = updParsedPosts.filter(post => post.id !== id);
+//   console.log(updParsedPosts);
+//   localStorage.setItem('updParsedPosts', JSON.stringify(updParsedPosts));
+//   // console.log(updparsedPostsFromLocalStorage);
+//   return updParsedPosts;
+// }
+// console.log(updParsedPosts);
+// function deletePost(id) {
+//   const dispatch = useDispatch();
+//   useEffect(() => {
+//     dispatch(operations.deletePosts(id));
+//   }, [dispatch]);
+//   return console.log(id);
 // }

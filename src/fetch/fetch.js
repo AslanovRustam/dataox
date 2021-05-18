@@ -6,17 +6,13 @@ const fetchAllPosts = () => {
   });
 };
 
-const fetchCommentsToPosts = id => {
+const fetchCommentsToPost = id => {
   return fetch(`${BASE_URL}/posts/${id}/comments`).then(response => {
     return response.json();
   });
 };
 
-const fetchPostsById = id => {
-  return fetch(`${BASE_URL}/posts/${id}`).then(response => {
-    return response.json();
-  });
-};
+//
 
 const addPost = post => {
   return fetch(`${BASE_URL}/posts`, {
@@ -71,13 +67,10 @@ const filterPost = userid => {
 //     return response.json();
 //   });
 // };
+// const fetchPostsById = id => {
+//   return fetch(`${BASE_URL}/posts/${id}`).then(response => {
+//     return response.json();
+//   });
+// };
 
-export {
-  filterPost,
-  fetchAllPosts,
-  fetchPostsById,
-  addPost,
-  updPost,
-  fetchdeletePost,
-  fetchCommentsToPosts,
-};
+export { filterPost, fetchAllPosts, addPost, updPost, fetchdeletePost, fetchCommentsToPost };
