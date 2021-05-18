@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import * as operations from '../redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import Post from './post';
+import Modal from '../modal/modal';
 import s from './postList.module.css';
 
 export default function PostList() {
@@ -45,28 +46,34 @@ export default function PostList() {
   //   }, [dispatch]);
   //   return console.log(id);
   // }
+  const [showModal, setShowmodal] = useState(false);
 
+  const toggleModal = () => setShowmodal(!showModal);
   return (
-    <div>
-      {updParsedPosts.length > 0 && (
-        <ul>
-          {updParsedPosts.map(post => (
-            <li className={s.elementPostCard} key={post.id} onClick={e => console.log(post.id)}>
-              <Post title={post.title} body={post.body} />
-              <button className={s.postButton} onClick={() => deletePost(post.id)}>
-                Delete
-              </button>
-              <button
-                className={s.postButton}
-                onClick={() => editPost({ tittle: post.title, body: post.body }, post.id)}
-              >
-                Update
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <>
+      <div>
+        {updParsedPosts.length > 0 && (
+          <ul>
+            {updParsedPosts.map(post => (
+              <li className={s.elementPostCard} key={post.id} onClick={e => console.log(post.id)}>
+                <Post title={post.title} body={post.body} />
+                <button className={s.postButton} onClick={() => deletePost(post.id)}>
+                  Delete
+                </button>
+                <button
+                  className={s.postButton}
+                  // onClick={() => editPost({ tittle: post.title, body: post.body }, post.id)}
+                  onClick={toggleModal}
+                >
+                  Update
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      {showModal && <Modal onClose={toggleModal} />}
+    </>
   );
 }
 

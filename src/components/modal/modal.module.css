@@ -7,12 +7,28 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.Modal__content {
+.addButton {
+  color: white;
+  margin-left: 10px;
+  padding: 2px;
+  background-color: rgb(20, 92, 42);
+}
+.labelModalStyle {
+  font-size: 24px;
+  margin: 10px;
+}
+.inputModalStyle {
+  width: 100%;
+  border: 2px solid black;
+}
+.formtStyle {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-height: 300px;
+  min-height: 200px;
   max-width: 600px;
   width: 100%;
   padding: 12px;
@@ -21,6 +37,7 @@
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
     0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
+
 /* .Overlay {
   position: fixed;
   top: 0;

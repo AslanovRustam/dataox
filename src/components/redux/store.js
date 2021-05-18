@@ -13,6 +13,14 @@ const postReducer = createReducer([], {
   [actions.deletePostSuccess]: (state, action) => {
     return state.filter(post => post.id !== action.payload);
   },
+  [actions.updPostSuccess]: (state, action) => {
+    console.log(action.payload);
+    // return state.push(action.payload);
+  },
+  [actions.filterSuccess]: (state, action) => {
+    console.log(action.payload);
+    // return state.push(action.payload);
+  },
 });
 
 // const error = createReducer(null, {

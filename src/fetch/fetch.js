@@ -54,6 +54,12 @@ const fetchdeletePost = id => {
     return response.json();
   });
 };
+
+const filterPost = userid => {
+  return fetch(`${BASE_URL}/posts?userId=${userid}`).then(response => {
+    return response.json();
+  });
+};
 // async function fetchAllPosts() {
 //   const response = await fetch(`${BASE_URL}/posts`);
 //   const posts = await response.json();
@@ -66,4 +72,12 @@ const fetchdeletePost = id => {
 //   });
 // };
 
-export { fetchAllPosts, fetchPostsById, addPost, updPost, fetchdeletePost, fetchCommentsToPosts };
+export {
+  filterPost,
+  fetchAllPosts,
+  fetchPostsById,
+  addPost,
+  updPost,
+  fetchdeletePost,
+  fetchCommentsToPosts,
+};

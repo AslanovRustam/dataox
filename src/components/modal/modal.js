@@ -1,56 +1,92 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPortal } from 'react-dom';
+import * as operations from '../redux/operations';
 import s from './modal.module.css';
 
 const modalRoot = document.querySelector('#modal-root');
 
-export default class Modal extends Component {
-  componentDidMount() {
-    console.log('Modal componentDidMount');
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
+export default function Modal({ onClose }) {
+  const [titleInput, setTitleInput] = useState('');
+  const [bodyInput, setBodyInput] = useState('');
 
-  componentWillUnmount() {
-    console.log('Modal componentWillUnmount');
-    window.removeEventListener('keydown', this.handleKeyDown);
-  }
+  // const posts = useSelector(state => state.posts);
 
-  handleKeyDown = e => {
-    if (e.code === 'Escape') {
-      console.log('Нажали ESC, нужно закрыть модалку');
+  const dispatch = useDispatch();
+  // const handleKeyDown = e => {
+  //   if (e.code === 'Escape') {
+  //     onClose();
+  //   }
+  // };
 
-      this.props.onClose();
-    }
-  };
-
-  handleBackdropClick = event => {
-    // console.log('Кликнули в бекдроп');
-
-    // console.log('currentTarget: ', event.currentTarget);
-    // console.log('target: ', event.target);
-
+  const handleBackdropClick = event => {
     if (event.currentTarget === event.target) {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  render() {
-    return createPortal(
-      <div className={s.Modal__backdrop} onClick={this.handleBackdropClick}>
-        <div className={s.Modal__content}>{this.props.children}</div>
-      </div>,
-      modalRoot,
-    );
-  }
+  const handleChangeTitle = e => {
+    setTitleInput(e.currentTarget.value);
+  };
+
+  const handleChangeBody = e => {
+    setBodyInput(e.currentTarget.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setTitleInput('');
+    setBodyInput('');
+  };
+
+  const editPost = e => {
+    // dispatch(operations.createPost({ title: titleInput, body: bodyInput, userId: 1 }));
+    console.log(e);
+    dispatch(operations.editPost({ titleInput, bodyInput }));
+    onClose();
+  };
+
+  return createPortal(
+    <div className={s.Modal__backdrop} onClick={handleBackdropClick}>
+      <form className={s.formtStyle} onSubmit={handleSubmit}>
+        <label className={s.labelModalStyle}>
+          Title
+          <input
+            className={s.inputModalStyle}
+            value={titleInput}
+            onChange={handleChangeTitle}
+          ></input>
+        </label>
+
+        <label className={s.labelModalStyle}>
+          Body
+          <input
+            className={s.inputModalStyle}
+            value={bodyInput}
+            onChange={handleChangeBody}
+          ></input>
+        </label>
+        <button type="submit" className={s.addButton} onClick={() => editPost()}>
+          Update
+        </button>
+      </form>
+    </div>,
+    modalRoot,
+  );
 }
 
 // import React, { Component } from 'react';
+// // import { useDispatch } from 'react-redux';
 // import { createPortal } from 'react-dom';
-// import './Modal.scss';
+// import s from './modal.module.css';
 
 // const modalRoot = document.querySelector('#modal-root');
 
 // export default class Modal extends Component {
+//   state = {
+//     titleInput: '',
+//     bodyInput: '',
+//   };
 //   componentDidMount() {
 //     console.log('Modal componentDidMount');
 //     window.addEventListener('keydown', this.handleKeyDown);
@@ -63,27 +99,64 @@ export default class Modal extends Component {
 
 //   handleKeyDown = e => {
 //     if (e.code === 'Escape') {
-//       console.log('Нажали ESC, нужно закрыть модалку');
-
 //       this.props.onClose();
 //     }
 //   };
 
 //   handleBackdropClick = event => {
-//     // console.log('Кликнули в бекдроп');
-
-//     // console.log('currentTarget: ', event.currentTarget);
-//     // console.log('target: ', event.target);
-
 //     if (event.currentTarget === event.target) {
 //       this.props.onClose();
 //     }
 //   };
 
+//   //  const [titleInput, setTitleInput] = useState('');
+//   // const [bodyInput, setBodyInput] = useState('');
+
+//   // dispatch = useDispatch();
+
+//   handleChangeTitle = e => {
+//     this.setState({ titleInput: e.currentTarget.value });
+//   };
+//   handleChangeBody = e => {
+//     this.setState({ bodyInput: e.currentTarget.value });
+//   };
+
+//   handleSubmit = e => {
+//     e.preventDefault();
+//     // dispatch(operations.createPost({ title: titleInput, body: bodyInput, userId: 1 }));
+//     this.setState({ titleInput: '', bodyInput: '' });
+//     // setBodyInput('');
+//   };
+
+//   editPost(e) {
+//     console.log(this.state.titleInput, this.state.bodyInput);
+//   }
+
 //   render() {
 //     return createPortal(
-//       <div className="Modal__backdrop" onClick={this.handleBackdropClick}>
-//         <div className="Modal__content">{this.props.children}</div>
+//       <div className={s.Modal__backdrop} onClick={this.handleBackdropClick}>
+//         <form className={s.formtStyle} onSubmit={this.handleSubmit}>
+//           <label className={s.labelModalStyle}>
+//             Title
+//             <input
+//               className={s.inputModalStyle}
+//               value={this.state.titleInput}
+//               onChange={this.handleChangeTitle}
+//             ></input>
+//           </label>
+
+//           <label className={s.labelModalStyle}>
+//             Body
+//             <input
+//               className={s.inputModalStyle}
+//               value={this.state.bodyInput}
+//               onChange={this.handleChangeBody}
+//             ></input>
+//           </label>
+//           <button type="submit" className={s.addButton} onClick={() => this.editPost()}>
+//             Update
+//           </button>
+//         </form>
 //       </div>,
 //       modalRoot,
 //     );

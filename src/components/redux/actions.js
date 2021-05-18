@@ -16,10 +16,17 @@ const updPostRequest = createAction('updPostRequest');
 const updPostSuccess = createAction('updPostSuccess');
 const updPostError = createAction('updPostError');
 
-const filterItem = createAction('filter');
+const filterRequest = createAction('filterRequest');
+const filterSuccess = createAction('filterSuccess');
+const filterError = createAction('filterError');
+
+// const filterItem = createAction('filter');
 
 export default {
-  filterItem,
+  filterRequest,
+  filterSuccess,
+  filterError,
+  // filterItem,
   fetchPostRequest,
   fetchPostSuccess,
   fetchPostError,
