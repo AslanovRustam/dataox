@@ -1,5 +1,4 @@
 import React from 'react';
-// import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   fetchAllPosts,
   fetchdeletePost,
@@ -7,6 +6,7 @@ import {
   updPost,
   filterPost,
   fetchCommentsToPost,
+  currentPageFetch,
 } from '../../fetch/fetch';
 import actions from './actions';
 
@@ -70,12 +70,12 @@ export const postWithComents = id => async dispatch => {
   }
 };
 
-// export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, { rejectWithValue }) => {
+// export const getCurrentPage = page => async dispatch => {
+//   dispatch(actions.currentPageRequest());
 //   try {
-//     const books = await bookShelfAPI.fetchBooks();
-//     return books;
+//     const newPage = await currentPageFetch(page);
+//     dispatch(actions.currentPageSuccess(newPage));
 //   } catch (error) {
-//     return rejectWithValue(error);
+//     dispatch(actions.currentPageError(error));
 //   }
-// });
-// export default fetchPosts;
+// };

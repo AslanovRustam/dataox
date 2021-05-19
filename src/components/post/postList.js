@@ -8,28 +8,34 @@ import Pagination from '../pagination/pagination';
 import s from './postList.module.css';
 
 export default function PostList() {
-  const posts = useSelector(state => state.posts);
   const filteredPosts = useSelector(state => state.filteredPosts);
+  console.log('filteredPosts', filteredPosts);
+
+  const pagesCount = Math.ceil(filteredPosts.length / 10);
+  console.log('pagesCount', pagesCount);
+  const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(10);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(operations.fetchPosts());
-  }, [dispatch]);
+  }, []);
 
-  localStorage.setItem('posts', JSON.stringify(posts));
-  const postsFromLocalStorage = localStorage.getItem('posts');
-  const parsedPostsFromLocalStorage = JSON.parse(postsFromLocalStorage);
+  console.log('posts', posts);
 
-  let updParsedPosts = parsedPostsFromLocalStorage;
-  localStorage.setItem('updParsedPosts', JSON.stringify(updParsedPosts));
-  const updpostsFromLocalStorage = localStorage.getItem('posts');
-  const updparsedPostsFromLocalStorage = JSON.parse(updpostsFromLocalStorage);
-  // console.log(updparsedPostsFromLocalStorage);
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  function paginate(pageNumber) {
+    return setCurrentPage(pageNumber);
+  }
+  console.log('typeof paginate', typeof paginate);
 
   function deletePost(id) {
     console.log('id', id);
     dispatch(operations.deletePost(id));
   }
-  // const postsForList = filteredPosts.length > 0 ? filteredPosts : updParsedPosts;
 
   const [showModal, setShowmodal] = useState(false);
   const [currentPost, setCurrentPost] = useState('');
@@ -44,9 +50,9 @@ export default function PostList() {
   }
   return (
     <>
-      {/* <div>
+      <div>
         <ul>
-          {filteredPosts.map(post => (
+          {currentPosts.map(post => (
             <li className={s.elementPostCard} key={post.id}>
               <div onClick={() => getComentsToPost(post.id)}>
                 <Post title={post.title} body={post.body} email={post.email} name={post.name} />
@@ -54,60 +60,29 @@ export default function PostList() {
               <button className={s.postButton} onClick={() => deletePost(post.id)}>
                 Delete
               </button>
-              <button
-                className={s.postButton}
-                // onClick={() => editPost({ tittle: post.title, body: post.body }, post.id)}
-                onClick={e => toggleModal(post)}
-              >
+              <button className={s.postButton} onClick={e => toggleModal(post)}>
                 Update
               </button>
             </li>
           ))}
         </ul>
-      </div> */}
-      <Pagination />
+      </div>
+      <Pagination
+        postsPerPage={postPerPage}
+        totalPosts={filteredPosts.length}
+        paginate={paginate}
+      />
       {showModal && <Modal onClose={toggleModal} post={currentPost} />}
     </>
   );
 }
 
-// import { fetchAllPosts } from '../../fetch/fetch';
-// import { useState, useEffect } from 'react';
+// localStorage.setItem('posts', JSON.stringify(posts));
+// const postsFromLocalStorage = localStorage.getItem('posts');
+// const parsedPostsFromLocalStorage = JSON.parse(postsFromLocalStorage);
 
-// export default function PostList() {
-//   const [posts, setPosts] = useState([]);
-//   useEffect(() => {
-//     fetchAllPosts().then(res => setPosts(res));
-//   }, []);
-//   return (
-//     <div>
-//       <ul>
-//         {posts.map(post => (
-//           <li key={post.id}>
-//             <Post title={post.title} body={post.body} />
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
-
-////////////////////////
-// function editPost(post, id) {
-//   dispatch(operations.editPost(post, id));
-// }
-// function deletePost(id) {
-//   updParsedPosts = updParsedPosts.filter(post => post.id !== id);
-//   console.log(updParsedPosts);
-//   localStorage.setItem('updParsedPosts', JSON.stringify(updParsedPosts));
-//   // console.log(updparsedPostsFromLocalStorage);
-//   return updParsedPosts;
-// }
-// console.log(updParsedPosts);
-// function deletePost(id) {
-//   const dispatch = useDispatch();
-//   useEffect(() => {
-//     dispatch(operations.deletePosts(id));
-//   }, [dispatch]);
-//   return console.log(id);
-// }
+// let updParsedPosts = parsedPostsFromLocalStorage;
+// localStorage.setItem('updParsedPosts', JSON.stringify(updParsedPosts));
+// const updpostsFromLocalStorage = localStorage.getItem('posts');
+// const updparsedPostsFromLocalStorage = JSON.parse(updpostsFromLocalStorage);
+// console.log(updparsedPostsFromLocalStorage);

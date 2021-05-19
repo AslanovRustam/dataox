@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as operations from '../redux/operations';
 import s from './filter.module.css';
 
-export default function FilterSection(onSubmit) {
+export default function FilterSection() {
   const [filterInput, setFilterInput] = useState('');
-  const posts = useSelector(state => state.posts);
-  // console.log(posts);
   const dispatch = useDispatch();
 
   function handleSubmitForm(e) {
     e.preventDefault();
     console.log(filterInput);
     dispatch(operations.findPost(filterInput));
-    // onSubmit(filterInput);
     setFilterInput('');
   }
   return (
@@ -22,7 +19,7 @@ export default function FilterSection(onSubmit) {
         <form onSubmit={handleSubmitForm}>
           <label>
             {' '}
-            To search posts by ID, please enter it here
+            To search posts by userID, please enter it here
             <input
               type="text"
               placeholder="enter your search input"

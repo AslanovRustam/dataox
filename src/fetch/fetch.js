@@ -18,11 +18,6 @@ const addPost = post => {
   return fetch(`${BASE_URL}/posts`, {
     method: 'POST',
     body: JSON.stringify(post),
-    // body: JSON.stringify({
-    //   title: 'foo',
-    //   body: 'bar',
-    //   userId: 1,
-    // }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
@@ -56,21 +51,17 @@ const filterPost = userid => {
     return response.json();
   });
 };
-// async function fetchAllPosts() {
-//   const response = await fetch(`${BASE_URL}/posts`);
-//   const posts = await response.json();
-//   return posts;
-// }
-
-// const fetchPostsbyId = () => {
-//   return fetch('https://jsonplaceholder.typicode.com/posts').then(response => {
-//     return response.json();
-//   });
-// };
-// const fetchPostsById = id => {
-//   return fetch(`${BASE_URL}/posts/${id}`).then(response => {
-//     return response.json();
-//   });
-// };
-
-export { filterPost, fetchAllPosts, addPost, updPost, fetchdeletePost, fetchCommentsToPost };
+const currentPageFetch = currentPage => {
+  return fetch(`https://jsonplaceholder.typicode.com/posts?_page=${currentPage}`).then(response => {
+    return response.json();
+  });
+};
+export {
+  filterPost,
+  fetchAllPosts,
+  addPost,
+  updPost,
+  fetchdeletePost,
+  fetchCommentsToPost,
+  currentPageFetch,
+};

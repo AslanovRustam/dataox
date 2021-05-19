@@ -24,13 +24,10 @@ const comentToPostRequest = createAction('fcomentToPostRequest');
 const comentToPostSuccess = createAction('comentToPostSuccess');
 const comentToPostError = createAction('comentToPostError');
 
-// const filterItem = createAction('filter');
-
 export default {
   filterRequest,
   filterSuccess,
   filterError,
-  // filterItem,
   fetchPostRequest,
   fetchPostSuccess,
   fetchPostError,
