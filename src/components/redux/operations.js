@@ -6,7 +6,6 @@ import {
   updPost,
   filterPost,
   fetchCommentsToPost,
-  currentPageFetch,
 } from '../../fetch/fetch';
 import actions from './actions';
 
@@ -69,13 +68,3 @@ export const postWithComents = id => async dispatch => {
     dispatch(actions.comentToPostError(error));
   }
 };
-
-// export const getCurrentPage = page => async dispatch => {
-//   dispatch(actions.currentPageRequest());
-//   try {
-//     const newPage = await currentPageFetch(page);
-//     dispatch(actions.currentPageSuccess(newPage));
-//   } catch (error) {
-//     dispatch(actions.currentPageError(error));
-//   }
-// };

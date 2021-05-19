@@ -1,4 +1,5 @@
 import React from 'react';
+
 import s from './pagination.module.css';
 
 export default function Pagination({ postsPerPage, totalPosts, paginate }) {
@@ -7,16 +8,41 @@ export default function Pagination({ postsPerPage, totalPosts, paginate }) {
     pageNumbers.push(i);
   }
   return (
-    <nav>
-      <ul className={s.paginationList}>
-        {pageNumbers.map(number => (
-          <li key={number} className={s.item}>
-            <a onClick={() => paginate(number)} href="!#">
-              {number}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className={s.center}>
+      <div className={s.pagination}>
+        <ul className={s.paginationList}>
+          {pageNumbers.map(number => (
+            <li key={number} className={s.item}>
+              <a onClick={() => paginate(number)} href="!#">
+                {number}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
+
+// <nav>
+//   <ul className={s.paginationList}>
+//     {pageNumbers.map(number => (
+//       <li key={number} className={s.item}>
+//         <a onClick={() => paginate(number)} href="!#">
+//           {number}
+//         </a>
+//       </li>
+//     ))}
+//   </ul>
+// </nav>;
+
+//  <ul>
+//    {pageNumbers.map(number => (
+//      <li key={number} onClick={() => paginate(number)}>
+//        <PaginationStyles count={number} />
+//        {/* <a onClick={() => paginate(number)} href="!#">
+//               {number}
+//             </a> */}
+//      </li>
+//    ))}
+//  </ul>;

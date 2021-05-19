@@ -24,3 +24,15 @@ p {
   padding: 2px;
   background-color: rgb(20, 25, 92);
 }
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.button {
+  margin-left: 10px;
+}
+.MuiButtonBase-root {
+  margin-left: 10px;
+  margin-right: 10px;
+}

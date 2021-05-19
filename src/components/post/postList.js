@@ -1,4 +1,7 @@
 import React from 'react';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { useState, useEffect } from 'react';
 import * as operations from '../redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +10,14 @@ import Modal from '../modal/modal';
 import Pagination from '../pagination/pagination';
 import s from './postList.module.css';
 
+const useStyles = makeStyles(theme => ({
+  margin: {
+    margin: theme.spacing(1),
+  },
+}));
+
 export default function PostList() {
+  const classes = useStyles();
   const filteredPosts = useSelector(state => state.filteredPosts);
   console.log('filteredPosts', filteredPosts);
 
@@ -57,12 +67,23 @@ export default function PostList() {
               <div onClick={() => getComentsToPost(post.id)}>
                 <Post title={post.title} body={post.body} email={post.email} name={post.name} />
               </div>
-              <button className={s.postButton} onClick={() => deletePost(post.id)}>
-                Delete
-              </button>
-              <button className={s.postButton} onClick={e => toggleModal(post)}>
-                Update
-              </button>
+              <div className={s.buttonContainer}>
+                <div>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => deletePost(post.id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+                <div>
+                  <Button variant="contained" color="primary" onClick={e => toggleModal(post)}>
+                    Update
+                  </Button>
+                </div>
+              </div>
             </li>
           ))}
         </ul>
